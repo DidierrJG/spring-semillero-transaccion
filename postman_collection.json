@@ -1,0 +1,175 @@
+{
+  "info": {
+    "name": "Semilleros Transaccionales API",
+    "description": "Colección de peticiones para probar el registro transaccional de semilleros y los 7 escenarios de prueba (T1 - T7).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Status API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/status",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "status"]
+        }
+      }
+    },
+    {
+      "name": "OpenAPI Docs (JSON)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v3/api-docs",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v3", "api-docs"]
+        }
+      }
+    },
+    {
+      "name": "T1 - Registro Válido (201 Created)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Semillero de Aplicaciones Web\",\n  \"sigla\": \"SAW-01\",\n  \"grupoInvestigacion\": \"Grupo de Ingeniería de Software\",\n  \"mision\": \"Promover la investigación aplicada\",\n  \"vision\": \"Desarrollar soluciones universitarias\",\n  \"objetivoGeneral\": \"Fortalecer competencias investigativas\",\n  \"director\": {\n    \"nombre\": \"Docente Ejemplo\",\n    \"correo\": \"docente@universidad.edu\"\n  },\n  \"lineas\": [\"Aplicaciones Web\", \"Sistemas Distribuidos\"],\n  \"integrantes\": [\n    { \"codigo\": \"2026001\", \"nombre\": \"Ana Ejemplo\",  \"programa\": \"Ingeniería de Sistemas\", \"esLider\": true },\n    { \"codigo\": \"2026002\", \"nombre\": \"Luis Ejemplo\", \"programa\": \"Ingeniería de Sistemas\", \"esLider\": false }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/semilleros",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "semilleros"]
+        }
+      }
+    },
+    {
+      "name": "T2 - Sigla Duplicada (409 Conflict)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Semillero Duplicado\",\n  \"sigla\": \"SAW-01\",\n  \"grupoInvestigacion\": \"Grupo de Software\",\n  \"director\": {\n    \"nombre\": \"Otro Docente\",\n    \"correo\": \"otrodocente@universidad.edu\"\n  },\n  \"lineas\": [\"Web\"],\n  \"integrantes\": [\n    { \"codigo\": \"2026005\", \"nombre\": \"Carlos\", \"programa\": \"Sistemas\", \"esLider\": true }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/semilleros",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "semilleros"]
+        }
+      }
+    },
+    {
+      "name": "T3 - Sin Integrantes (400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Semillero Sin Integrantes\",\n  \"sigla\": \"SSI-01\",\n  \"grupoInvestigacion\": \"Grupo Redes\",\n  \"director\": {\n    \"nombre\": \"Docente Redes\",\n    \"correo\": \"redes@universidad.edu\"\n  },\n  \"lineas\": [\"Redes\"],\n  \"integrantes\": []\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/semilleros",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "semilleros"]
+        }
+      }
+    },
+    {
+      "name": "T4 - Dos Líderes (400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Semillero Dos Líderes\",\n  \"sigla\": \"SDL-01\",\n  \"grupoInvestigacion\": \"Grupo Móviles\",\n  \"director\": {\n    \"nombre\": \"Docente Movil\",\n    \"correo\": \"movil@universidad.edu\"\n  },\n  \"lineas\": [\"Móviles\"],\n  \"integrantes\": [\n    { \"codigo\": \"2026010\", \"nombre\": \"Pedro Uno\", \"programa\": \"Sistemas\", \"esLider\": true },\n    { \"codigo\": \"2026011\", \"nombre\": \"Maria Dos\", \"programa\": \"Sistemas\", \"esLider\": true }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/semilleros",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "semilleros"]
+        }
+      }
+    },
+    {
+      "name": "T5 - Código Estudiantil Repetido (400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Semillero Códigos Repetidos\",\n  \"sigla\": \"SCR-01\",\n  \"grupoInvestigacion\": \"Grupo Datos\",\n  \"director\": {\n    \"nombre\": \"Docente Datos\",\n    \"correo\": \"datos@universidad.edu\"\n  },\n  \"lineas\": [\"Ciencia de Datos\"],\n  \"integrantes\": [\n    { \"codigo\": \"2026999\", \"nombre\": \"Estudiante A\", \"programa\": \"Sistemas\", \"esLider\": true },\n    { \"codigo\": \"2026999\", \"nombre\": \"Estudiante B\", \"programa\": \"Sistemas\", \"esLider\": false }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/semilleros",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "semilleros"]
+        }
+      }
+    },
+    {
+      "name": "T6 - Correo Inválido (400 Bad Request)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Semillero Correo Mal\",\n  \"sigla\": \"SCM-01\",\n  \"grupoInvestigacion\": \"Grupo Seguridad\",\n  \"director\": {\n    \"nombre\": \"Docente Seguridad\",\n    \"correo\": \"correo-invalido-sin-arroba\"\n  },\n  \"lineas\": [\"Seguridad\"],\n  \"integrantes\": [\n    { \"codigo\": \"2026111\", \"nombre\": \"Estudiante Ciber\", \"programa\": \"Sistemas\", \"esLider\": true }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/semilleros",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "semilleros"]
+        }
+      }
+    }
+  ]
+}

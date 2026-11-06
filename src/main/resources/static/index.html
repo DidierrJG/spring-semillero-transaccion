@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semilleros de investigación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <svg class="constelacion" viewBox="0 0 520 320" aria-hidden="true">
+    <g stroke="currentColor" stroke-width="1.2" fill="none" opacity=".55">
+      <path d="M40 250 L130 170 L230 205 L300 110 L410 150 L480 60"/>
+      <path d="M130 170 L120 70 L300 110"/>
+      <path d="M230 205 L330 270 L410 150"/>
+      <path d="M120 70 L230 30 L300 110"/>
+    </g>
+    <g fill="currentColor">
+      <circle cx="40" cy="250" r="5"/><circle cx="130" cy="170" r="7"/><circle cx="230" cy="205" r="5"/>
+      <circle cx="300" cy="110" r="9"/><circle cx="410" cy="150" r="6"/><circle cx="480" cy="60" r="5"/>
+      <circle cx="120" cy="70" r="5"/><circle cx="230" cy="30" r="4"/><circle cx="330" cy="270" r="5"/>
+    </g>
+    <circle cx="300" cy="110" r="18" fill="none" stroke="#ffc233" stroke-width="2"/>
+    <circle cx="300" cy="110" r="9" fill="#ffc233"/>
+  </svg>
+
+  <div class="hero-inner">
+    <h1>Semilleros de investigación</h1>
+    <p>Los grupos donde nacen los proyectos de IA, web, datos y más. Registra uno nuevo o consulta los que ya existen.</p>
+    <div class="hero-actions">
+      <a class="btn btn-accent" href="#nuevo">Registrar semillero</a>
+      <dl class="stats">
+        <div><dt>Semilleros</dt><dd id="statSem">–</dd></div>
+        <div><dt>Integrantes</dt><dd id="statInt">–</dd></div>
+      </dl>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Listado -->
+  <section class="lista-panel" aria-labelledby="tituloLista">
+    <div class="lista-head">
+      <div>
+        <h2 id="tituloLista">Semilleros registrados</h2>
+        <small id="countLabel">Cargando…</small>
+      </div>
+      <div class="lista-tools">
+        <input type="search" id="buscar" placeholder="Buscar por sigla" aria-label="Buscar semillero por sigla">
+        <button type="button" class="btn btn-ghost" id="refreshBtn">↻ Actualizar</button>
+      </div>
+    </div>
+    <div class="list" id="semillerosList">
+      <div class="loading">Cargando semilleros…</div>
+    </div>
+  </section>
+
+  <!-- Formulario -->
+  <aside class="form-panel" id="nuevo">
+    <div class="form-head"><h2>Nuevo semillero</h2><p>Los campos con * son obligatorios.</p></div>
+    <form id="semilleroForm" novalidate>
+
+      <fieldset>
+        <legend>Datos generales</legend>
+        <div class="grid-2">
+          <div class="field">
+            <label for="nombre">Nombre <span class="req">*</span></label>
+            <input id="nombre" name="nombre" placeholder="Semillero de Aplicaciones Web">
+            <span class="error">El nombre del semillero es obligatorio</span>
+          </div>
+          <div class="field">
+            <label for="sigla">Sigla <span class="req">*</span></label>
+            <input id="sigla" name="sigla" placeholder="SAW-01">
+            <span class="error">La sigla del semillero es obligatoria</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="grupoInvestigacion">Grupo de investigación <span class="req">*</span></label>
+          <input id="grupoInvestigacion" name="grupoInvestigacion" placeholder="Grupo de Ingeniería de Software">
+          <span class="error">El grupo de investigación es obligatorio</span>
+        </div>
+        <div class="field">
+          <label for="mision">Misión</label>
+          <textarea id="mision" name="mision" placeholder="Promover la investigación aplicada"></textarea>
+        </div>
+        <div class="field">
+          <label for="vision">Visión</label>
+          <textarea id="vision" name="vision" placeholder="Desarrollar soluciones universitarias"></textarea>
+        </div>
+        <div class="field">
+          <label for="objetivoGeneral">Objetivo general</label>
+          <textarea id="objetivoGeneral" name="objetivoGeneral" placeholder="Fortalecer competencias investigativas"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Docente director</legend>
+        <div class="grid-2">
+          <div class="field">
+            <label for="dirNombre">Nombre completo <span class="req">*</span></label>
+            <input id="dirNombre" name="dirNombre" placeholder="María Pérez">
+            <span class="error">Campo obligatorio</span>
+          </div>
+          <div class="field">
+            <label for="dirCorreo">Correo <span class="req">*</span></label>
+            <input id="dirCorreo" name="dirCorreo" type="email" placeholder="maria@universidad.edu.co">
+            <span class="error">Campo obligatorio</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Líneas de investigación</legend>
+        <div id="lineasContainer"></div>
+        <span class="error" id="lineasError">Debe existir al menos una línea de investigación</span>
+        <button type="button" class="btn btn-ghost" id="addLinea">+ Agregar línea</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Integrantes</legend>
+        <div id="integrantesContainer"></div>
+        <span class="error" id="integrantesError">Debe existir al menos un integrante</span>
+        <button type="button" class="btn btn-ghost" id="addIntegrante">+ Agregar integrante</button>
+      </fieldset>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">Registrar semillero</button>
+    </form>
+  </aside>
+
+</main>
+
+<dialog id="detalle" class="detalle" aria-labelledby="detalleTitulo">
+  <div class="detalle-head">
+    <div>
+      <span class="detalle-sub" id="detalleSub">Semillero</span>
+      <h2 id="detalleTitulo"></h2>
+    </div>
+    <button type="button" class="btn-cerrar" id="cerrarDetalle" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="detalle-body" id="detalleBody"></div>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
